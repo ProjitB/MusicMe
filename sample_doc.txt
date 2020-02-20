@@ -1,0 +1,14 @@
+--- Artist 1 ---
+Song1
+Song2
+Song3 [happy]
+
+--- Artist 2 ---
+Song1 [work]
+OtherSong2 [lively]
+CoolSong [work] [fast]
+
+--- Some Artist ---
+Song1 [sad]
+FunSong [happy]
+SadSong
