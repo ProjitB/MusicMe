@@ -1,0 +1,38 @@
+# Music Organizing and Querying Utility
+
+Create a file with the format:
+
+--- Artist1 ---
+Song1
+Song2
+...
+
+--- Artist2 ---
+Song1
+Song2
+...
+
+...
+
+
+Use the recommend music script to then search through and filter songs.
+I find it really nice to the names and artists of songs I like locally, and use this utility to recommend myself music.
+Over time it's quite nice to go back and listen to the same stuff that I listened to a long time ago.
+I'm sure this script can be adapted to do other things, so feel free to do so.
+
+
+Usage:
+Set the file to be parsed at the top of the script
+
+python3 recommend_music.py :: Selects random song from the file
+
+python3 recommend_music.py -a artist :: Selects random song by artist. artist is case and space insensitive, and will work with partial string matches as well. Ex. python3 recommend_music.py -a edsheer 
+
+python3 recommend_music.py --all :: Add the --all flag to give all songs that match your filter criteria. Can be used with artist or tags
+
+python3 recommend_music.py -t :: Give random song with matching tag. A tag is inserted into the file using [tag]. It is then searched for by the tag itself(not using the brackets). Ex. python3 recommend_music.py -t happy
+
+python3 recommend_music.py --tags tag1 tag2 :: Use the tags flag to require multipl tags to be present for a song to be selected.
+
+All the flags are composable, and can be used together.
+Use python recommend_music.py --help to see all the cli options
