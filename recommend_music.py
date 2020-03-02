@@ -1,8 +1,9 @@
 import random
 import argparse
 import sys
+import os
 
-FILENAME = 'sample_doc.txt'
+FILENAME = '/Users/projit/Documents/personal/music/music_list'
 
 def load_info(filename):
     mapping_a_s = {}
@@ -56,6 +57,7 @@ def parse_args():
     parser.add_argument('-a', '--artist', dest='artist', metavar='\b', help="Filter by artist")
     parser.add_argument('--tags', nargs='+', dest='tags', metavar='\b', help="Filter by tag(s). && of tags supplied.")
     parser.add_argument('-t', '--tag', dest='tag', metavar='\b', help="Filter by tag.")
+    parser.add_argument('-y', '--youtube', dest='youtube', action='store_true', help="Open first result in youtube")
     parser.add_argument('--all', dest='all', action='store_true', help="Print Everything that matches")
     try:
         args = parser.parse_args()
@@ -112,7 +114,8 @@ def func_invoker(args, sl, al, mapa_s, maps_a):
         artist_cleaned = args.artist.lower().strip().replace(' ', '')
         idxlist = find_artist_index(alist, artist_cleaned)
         if len(idxlist) == 0:
-            return "Artist not Found"
+            print("Artist not Found")
+            exit(0)
         al = [al[idx] for idx in idxlist]
         # print(al)
         sllist = []
@@ -133,7 +136,8 @@ def func_invoker(args, sl, al, mapa_s, maps_a):
         sl = [song for song in sl if compare_sets(extract_tags(song), tagsearch)]
 
     if len(sl) == 0:
-        return "No Songs Found"
+        print("No Songs Found")
+        exit(0)
 
     if args.all:
         return select_all(sl, al, maps_a)
@@ -143,7 +147,14 @@ def func_invoker(args, sl, al, mapa_s, maps_a):
 def main():
     sl, al, mapa_s, maps_a = load_info(FILENAME)
     args = parse_args()
-    print(func_invoker(args, sl, al, mapa_s, maps_a))
+    retval = func_invoker(args, sl, al, mapa_s, maps_a)
+    if args.youtube:
+        info = retval.split("\n")[0].split("[")[0]
+        artstr = "+".join(info.split(":")[0].split(" "))
+        songstr = "+".join(info.split(":")[1].split(" "))
+        os.system("open -a firefox https://www.youtube.com/results?search_query="+artstr+songstr)
+    else:
+        print(retval)
 
 if __name__ == '__main__':
     main()
